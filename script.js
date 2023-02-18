@@ -6,29 +6,37 @@ let width = 800;
 let height = 600;
 
 // range of x values
-let xmin = -10;
-let xmax = 10;
+let xmin = -5;
+let xmax = 5;
 // range of y values
-let ymin = -10;
-let ymax = 10;
+let ymin = -5;
+let ymax = 5;
 
 // test functions
-//let f = x => Math.pow(x, 2);
-let f = x => Math.sin(x) * 5 + 10;
+let f = x => Math.pow(x, 2);
+//let f = x => -Math.pow(x, 2);
+//let f = x => (5 * Math.sin(x));
 //let f = x => (x + 1) / (x - 1); // problems with horizontal asymptotes
 
-// scale of x and y values to match width and height of canvas
-let xscale = width / (Math.abs(xmin) + Math.abs(xmax));
-let yscale = height / (Math.abs(ymin) + Math.abs(ymax))
+// used to scale of x and y values to match width and height of canvas
+var transformRange = (value, r1, r2) => {
+    var scale = (r2.max - r2.min) / (r1.max - r1.min);
+    return (value - r1.min) * scale;
+}
 
 ctx.lineWidth = 1;
 
 // begin drawing functions
 ctx.beginPath();
-for (let i = xmin; i < xmax; i += 0.1) {
-    let x = i * xscale + width / 2; // calculate x value
-    let y = (-f(i) * yscale + height); // calculate y value
 
-    ctx.lineTo(x, y); // draw line to point
+ctx.scale(1,-1); // flip graph upside down so 0 is on the bottom
+ctx.translate(0, -height); // fix position
+
+for (let i = xmin; i < xmax; i += 0.01) {
+    let x = transformRange(i, {min: xmin, max: xmax}, {min: 0, max: width});
+    let y = transformRange(f(i), {min: ymin, max: ymax}, {min: 0, max: height});
+
+    ctx.lineTo(x, y)
 }
+
 ctx.stroke();
