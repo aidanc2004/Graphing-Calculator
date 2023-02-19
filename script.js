@@ -2,8 +2,8 @@ let graph = document.getElementById("graph");
 let ctx = graph.getContext("2d");
 
 // width and height of the canvas
-let width = 800;
-let height = 600;
+let width = graph.width;
+let height = graph.height;
 
 // range of x values
 let xmin = -5;
@@ -14,9 +14,9 @@ let ymax = 5;
 
 // draw the x and y axis
 function drawAxes() {
-    // position on the graph where x/y = 0
-    let xZero = transformRange(0, {min: ymin, max: ymax}, {min: 0, max: height});
-    let yZero = transformRange(0, {min: xmin, max: xmax}, {min: 0, max: width});
+    // position on the graph where x or y = 0
+    let xZero = yScale(0);
+    let yZero = xScale(0);
 
     // draw x axis
     ctx.beginPath();
@@ -41,8 +41,8 @@ function drawFunction(f, color) {
     ctx.strokeStyle = color;
 
     for (let i = xmin; i < xmax; i += 0.01) {
-        let x = transformRange(i, {min: xmin, max: xmax}, {min: 0, max: width});
-        let y = transformRange(f(i), {min: ymin, max: ymax}, {min: 0, max: height});
+        let x = xScale(i);
+        let y = yScale(f(i));
 
         ctx.lineTo(x, y)
     }
@@ -50,23 +50,25 @@ function drawFunction(f, color) {
     ctx.stroke();
 }
 
-// used to scale of x and y values to match width and height of canvas
-function transformRange(value, r1, r2) {
-    var scale = (r2.max - r2.min) / (r1.max - r1.min);
-    return (value - r1.min) * scale;
+// scale x and y values to match width and height of canvas
+function xScale(x) {
+    return (x - xmin) * (width - 0) / (xmax - xmin);
+}
+
+function yScale(y) {
+    return (y - ymin) * (height - 0) / (ymax - ymin);
 }
 
 // test functions
-let f = x => Math.pow(x, 2);
-//let f = x => -Math.pow(x, 2);
-let g = x => (5 * Math.sin(x));
-//let h = x => (x + 1) / (x - 1); // problems with horizontal asymptotes
-
-let functions = [f, g];
+let functions = [
+    f = x => Math.pow(x, 2),
+    g = x => (5 * Math.sin(x)),
+    h = x => (x + 1) / (x - 1), // problems with horizontal asymptotes
+]
 
 let colors = ["#ff0000", "#00ad22", "#0000ff"];
 
-ctx.lineWidth = 1;
+ctx.lineWidth = 2;
 
 ctx.scale(1,-1); // flip graph upside down so 0 is on the bottom
 ctx.translate(0, -height); // fix position
