@@ -35,6 +35,21 @@ function drawAxes() {
     ctx.setLineDash([]);
 }
 
+function drawFunction(f, color) {
+    ctx.beginPath();
+
+    ctx.strokeStyle = color;
+
+    for (let i = xmin; i < xmax; i += 0.01) {
+        let x = transformRange(i, {min: xmin, max: xmax}, {min: 0, max: width});
+        let y = transformRange(f(i), {min: ymin, max: ymax}, {min: 0, max: height});
+
+        ctx.lineTo(x, y)
+    }
+
+    ctx.stroke();
+}
+
 // used to scale of x and y values to match width and height of canvas
 function transformRange(value, r1, r2) {
     var scale = (r2.max - r2.min) / (r1.max - r1.min);
@@ -44,8 +59,12 @@ function transformRange(value, r1, r2) {
 // test functions
 let f = x => Math.pow(x, 2);
 //let f = x => -Math.pow(x, 2);
-//let f = x => (5 * Math.sin(x));
-//let f = x => (x + 1) / (x - 1); // problems with horizontal asymptotes
+let g = x => (5 * Math.sin(x));
+//let h = x => (x + 1) / (x - 1); // problems with horizontal asymptotes
+
+let functions = [f, g];
+
+let colors = ["#ff0000", "#00ad22", "#0000ff"];
 
 ctx.lineWidth = 1;
 
@@ -56,13 +75,10 @@ ctx.translate(0, -height); // fix position
 drawAxes();
 
 // begin drawing functions
-ctx.beginPath();
+for (let key in functions) {
+    let f = functions[key];
+    let color = colors[key];
 
-for (let i = xmin; i < xmax; i += 0.01) {
-    let x = transformRange(i, {min: xmin, max: xmax}, {min: 0, max: width});
-    let y = transformRange(f(i), {min: ymin, max: ymax}, {min: 0, max: height});
-
-    ctx.lineTo(x, y)
+    drawFunction(f, color);
 }
 
-ctx.stroke();
