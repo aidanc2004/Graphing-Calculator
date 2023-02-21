@@ -3,12 +3,13 @@ let ctx = graph.getContext("2d");
 let form = document.getElementById("form");
 let submitEquation = document.getElementById("submit");
 let equationInput = document.getElementById("equation");
+let equationList = document.getElementById("equations");
 
 let functions = [
     /*f = x => Math.pow(x, 2),
     g = x => (5 * Math.sin(x)),
     h = x => (x + 1) / (x - 1), // problems with horizontal asymptotes*/
-]
+];
 
 // make inputting an equation not refresh the page
 form.addEventListener("submit", (event) => event.preventDefault());
@@ -17,12 +18,17 @@ form.addEventListener("submit", (event) => event.preventDefault());
 submitEquation.addEventListener("click", () => {
     // get equation from user
     let equation = "f(x) = " + document.getElementById("equation").value;
-    // evaluate equation into javascript function using Math.js
-    f = math.evaluate(equation)
-    // add function to array of functions
+
+    f = math.evaluate(equation) // evaluate equation into javascript function using Math.js
     functions.push(f);
+
     // redraw graph with new function
     drawGraph();
+
+    // add equation to list of equations
+    let li = document.createElement('li');
+    li.innerText = equation;
+    equationList.appendChild(li);
 })
 
 // width and height of the canvas
@@ -61,6 +67,7 @@ function drawAxes() {
     ctx.setLineDash([]);
 }
 
+// draw a function onto the graph
 function drawFunction(f, color) {
     ctx.beginPath();
 
@@ -72,8 +79,6 @@ function drawFunction(f, color) {
 
         ctx.lineTo(x, y)
     }
-
-    
 
     ctx.stroke();
 }
@@ -97,7 +102,14 @@ function drawGraph() {
     // begin drawing functions
     for (let key in functions) {
         let f = functions[key];
-        let color = colors[key];
+        let color;
+
+        // if more functions than colors, use black
+        if (key < colors.length) {
+            color = colors[key];
+        } else {
+            color = "#000000";
+        }
 
         drawFunction(f, color);
     }
