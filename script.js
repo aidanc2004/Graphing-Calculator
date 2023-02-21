@@ -11,13 +11,29 @@ let functions = [
     h = x => (x + 1) / (x - 1), // problems with horizontal asymptotes*/
 ];
 
+let functionLetters = ['f', 'g', 'h'];
+
 // make inputting an equation not refresh the page
 form.addEventListener("submit", (event) => event.preventDefault());
 
 // add button to get equation from user
 submitEquation.addEventListener("click", () => {
+    // get number of functions to determine what letter to use
+    let numberOfFunctions = functions.length;
+
+    let letter; // letter to use for the function name
+
+    // if there are more functions then letters for the function, just use 'f'
+    if (numberOfFunctions >= functionLetters.length) {
+        letter = 'f';
+    } else {
+        letter = functionLetters[numberOfFunctions];
+    }
+
+    console.log("letter", letter)
+
     // get equation from user
-    let equation = "f(x) = " + document.getElementById("equation").value;
+    let equation = letter + "(x) = " + document.getElementById("equation").value;
 
     f = math.evaluate(equation) // evaluate equation into javascript function using Math.js
     functions.push(f);
