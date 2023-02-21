@@ -5,9 +5,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="script.js" defer></script>
+    <!-- Math.js for turning math equations into JavaScript functions -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/7.5.1/math.min.js" defer></script>
     <title>Graphing Calculator</title>
 </head>
 <body>
     <canvas id="graph" width="1000" height="800" style="border: 1px solid black"></canvas>
+    <form id="form">
+        <label for="equation">Equation:</label>
+        <input type="text" name="equation" id="equation">
+        <button id="submit">Submit</button>
+    </form>
 </body>
 </html>
