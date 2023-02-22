@@ -3,7 +3,6 @@
     - allow user to adjust xmin, xmax, ymin and ymax
     - allow user to remove functions
     - click to show point on function, ex. (1, 2)
-    - draw grid
     - add label for x and y axes
     - add css
 */
@@ -94,7 +93,6 @@ function drawAxes() {
 }
 
 // draw a grid on the graph
-// note: currently only works for integer x/ymax and x/ymin values
 function drawGrid() {
     // position on the graph where x or y = 0
     let xZero = yScale(0);
@@ -105,7 +103,7 @@ function drawGrid() {
 
     // x lines
     for (let i = xmin; i < xmax; i++) {
-        let x = xScale(i);
+        let x = xScale(Math.ceil(i));
         
         ctx.beginPath()
         ctx.moveTo(x, 0);
@@ -116,7 +114,7 @@ function drawGrid() {
 
     // y lines
     for (let i = ymin; i < ymax; i++) {
-        let y = yScale(i);
+        let y = yScale(Math.ceil(i));
 
         ctx.beginPath()
         ctx.moveTo(0, y);
@@ -163,8 +161,6 @@ function drawGraph() {
 
     // draw x and y axis
     drawAxes();
-
-    
 
     // begin drawing functions
     for (let key in functions) {
