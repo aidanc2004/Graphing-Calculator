@@ -1,3 +1,13 @@
+/*
+    TODO:
+    - allow user to adjust xmin, xmax, ymin and ymax
+    - allow user to remove functions
+    - click to show point on function, ex. (1, 2)
+    - draw grid
+    - add label for x and y axes
+    - add css
+*/
+
 let graph = document.getElementById("graph");
 let ctx = graph.getContext("2d");
 let form = document.getElementById("form");
@@ -83,6 +93,41 @@ function drawAxes() {
     ctx.setLineDash([]);
 }
 
+// draw a grid on the graph
+// note: currently only works for integer x/ymax and x/ymin values
+function drawGrid() {
+    // position on the graph where x or y = 0
+    let xZero = yScale(0);
+    let yZero = xScale(0);
+
+    // draw grid lines in grey
+    ctx.strokeStyle = '#dddddd';
+
+    // x lines
+    for (let i = xmin; i < xmax; i++) {
+        let x = xScale(i);
+        
+        ctx.beginPath()
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, height);
+        ctx.stroke();
+        ctx.closePath();
+    }
+
+    // y lines
+    for (let i = ymin; i < ymax; i++) {
+        let y = yScale(i);
+
+        ctx.beginPath()
+        ctx.moveTo(0, y);
+        ctx.lineTo(width, y);
+        ctx.stroke();
+        ctx.closePath();
+    }
+
+    ctx.strokeStyle = '#000000';
+}
+
 // draw a function onto the graph
 function drawFunction(f, color) {
     ctx.beginPath();
@@ -97,6 +142,8 @@ function drawFunction(f, color) {
     }
 
     ctx.stroke();
+
+    ctx.closePath();
 }
 
 // scale x and y values to match width and height of canvas
@@ -112,8 +159,12 @@ function yScale(y) {
 function drawGraph() {
     ctx.clearRect(0, 0, width, height);
 
+    drawGrid();
+
     // draw x and y axis
     drawAxes();
+
+    
 
     // begin drawing functions
     for (let key in functions) {
