@@ -14,13 +14,25 @@ let submitEquation = document.getElementById("submit");
 let equationInput = document.getElementById("equation");
 let equationList = document.getElementById("equations");
 
+// object of color codes
+let colorCodes = {
+    "black": "#000000",
+    "grey": "#dddddd",
+    "red": "#ff0000",
+    "green": "#00ad22",
+    "blue": "#0000ff",
+    "orange": "#ff8a00",
+    "pink": "#ff60fe",
+    "yellow": "#d9ec00",
+}
+
 let functions = [
     /*f = x => Math.pow(x, 2),
     g = x => (5 * Math.sin(x)),
     h = x => (x + 1) / (x - 1), // problems with horizontal asymptotes*/
 ];
 
-let functionLetters = ['f', 'g', 'h'];
+let functionLetters = ['f', 'g', 'h', 'i', 'j', 'k'];
 
 // make inputting an equation not refresh the page
 form.addEventListener("submit", (event) => event.preventDefault());
@@ -38,8 +50,6 @@ submitEquation.addEventListener("click", () => {
     } else {
         letter = functionLetters[numberOfFunctions];
     }
-
-    console.log("letter", letter)
 
     // get equation from user
     let equation = letter + "(x) = " + document.getElementById("equation").value;
@@ -73,7 +83,7 @@ function drawAxes() {
     let xZero = yScale(0);
     let yZero = xScale(0);
 
-    ctx.strokeStyle = "#000000";
+    ctx.strokeStyle = colorCodes["black"];
 
     // draw x axis
     ctx.beginPath();
@@ -99,7 +109,7 @@ function drawGrid() {
     let yZero = xScale(0);
 
     // draw grid lines in grey
-    ctx.strokeStyle = '#dddddd';
+    ctx.strokeStyle = colorCodes["grey"];
 
     // x lines
     for (let i = xmin; i < xmax; i++) {
@@ -123,7 +133,7 @@ function drawGrid() {
         ctx.closePath();
     }
 
-    ctx.strokeStyle = '#000000';
+    ctx.strokeStyle = colorCodes["black"];
 }
 
 // draw a function onto the graph
@@ -142,6 +152,8 @@ function drawFunction(f, color) {
     ctx.stroke();
 
     ctx.closePath();
+
+    ctx.strokeStyle = colorCodes["black"];
 }
 
 // scale x and y values to match width and height of canvas
@@ -155,6 +167,7 @@ function yScale(y) {
 
 // draw all functions on the graph and the axes
 function drawGraph() {
+    // clear canvas
     ctx.clearRect(0, 0, width, height);
 
     drawGrid();
@@ -171,18 +184,19 @@ function drawGraph() {
         if (key < colors.length) {
             color = colors[key];
         } else {
-            color = "#000000";
+            color = colorCodes["black"];
         }
 
         drawFunction(f, color);
     }
 }
 
-let colors = ["#ff0000", "#00ad22", "#0000ff"];
+let colors = [colorCodes["red"], colorCodes["green"], colorCodes["blue"], colorCodes["orange"], colorCodes["pink"], colorCodes["yellow"]];
 
 ctx.lineWidth = 2;
 
 ctx.scale(1,-1); // flip graph upside down so 0 is on the bottom
 ctx.translate(0, -height); // fix position
 
+// draw first graph with no functions
 drawGraph();
