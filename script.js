@@ -4,19 +4,27 @@
     - click to show point on function, ex. (1, 2)
     - add label for x and y axes
     - add css
+    - fix vertical asymptotes
 */
 
-let graph = document.getElementById("graph");
-let ctx = graph.getContext("2d");
-let equationForm = document.getElementById("equation-form"); // rename
-let xySettings = document.getElementById("x-y-settings");
-let xyUpdate = document.getElementById("x-y-update");
-let submitEquation = document.getElementById("submit");
-let equationInput = document.getElementById("equation");
-let equationList = document.getElementById("equations");
+// canvas and context
+const graph = document.getElementById("graph");
+const ctx = graph.getContext("2d");
+// submiting equations
+const equationForm = document.getElementById("equation-form");
+const submitEquation = document.getElementById("submit-equation");
+const equationInput = document.getElementById("equation");
+const equationList = document.getElementById("equations");
+// adjust x and y range
+const xyForm = document.getElementById("x-y-form");
+const xyUpdate = document.getElementById("x-y-update");
+
+// width and height of the canvas
+const width = graph.width;
+const height = graph.height;
 
 // object of color codes
-let colorCodes = {
+const colorCodes = {
     "black": "#000000",
     "grey": "#dddddd",
     "red": "#ff0000",
@@ -25,19 +33,38 @@ let colorCodes = {
     "orange": "#ff8a00",
     "pink": "#ff60fe",
     "yellow": "#d9ec00",
-}
+};
 
+// array of colors to use for functions
+const colors = [
+    colorCodes["red"],
+    colorCodes["green"],
+    colorCodes["blue"],
+    colorCodes["orange"],
+    colorCodes["pink"],
+    colorCodes["yellow"]
+];
+
+// letter to use for function names (ex. f(x) = x^2 or g(x) = x^2)
+const functionLetters = ['f', 'g', 'h', 'i', 'j', 'k'];
+
+// range of x values
+let xmin = -5;
+let xmax = 5;
+// range of y values
+let ymin = -5;
+let ymax = 5;
+
+// array of all functions of graph
 let functions = [
     /*f = x => Math.pow(x, 2),
     g = x => (5 * Math.sin(x)),
-    h = x => (x + 1) / (x - 1), // problems with horizontal asymptotes*/
+    h = x => (x + 1) / (x - 1), // problems with vertical asymptotes*/
 ];
-
-let functionLetters = ['f', 'g', 'h', 'i', 'j', 'k'];
 
 // make inputting an equation or new x/y value not refresh the page
 equationForm.addEventListener("submit", (event) => event.preventDefault());
-xySettings.addEventListener("submit", (event) => event.preventDefault());
+xyForm.addEventListener("submit", (event) => event.preventDefault());
 
 // add button to get equation from user
 submitEquation.addEventListener("click", () => {
@@ -68,17 +95,6 @@ submitEquation.addEventListener("click", () => {
     equationList.appendChild(li);
 })
 
-// width and height of the canvas
-let width = graph.width;
-let height = graph.height;
-
-// range of x values
-let xmin = -5;
-let xmax = 5;
-// range of y values
-let ymin = -5;
-let ymax = 5;
-
 // update the xmin, xmax, ymin, ymax values and refresh graph
 function updateXY() {
     // get inputs from DOM
@@ -105,8 +121,8 @@ xyUpdate.addEventListener("click", () => {
 // draw the x and y axis
 function drawAxes() {
     // position on the graph where x or y = 0
-    let xZero = yScale(0);
-    let yZero = xScale(0);
+    const xZero = yScale(0);
+    const yZero = xScale(0);
 
     ctx.strokeStyle = colorCodes["black"];
 
@@ -130,8 +146,8 @@ function drawAxes() {
 // draw a grid on the graph
 function drawGrid() {
     // position on the graph where x or y = 0
-    let xZero = yScale(0);
-    let yZero = xScale(0);
+    const xZero = yScale(0);
+    const yZero = xScale(0);
 
     // draw grid lines in grey
     ctx.strokeStyle = colorCodes["grey"];
@@ -216,12 +232,13 @@ function drawGraph() {
     }
 }
 
-let colors = [colorCodes["red"], colorCodes["green"], colorCodes["blue"], colorCodes["orange"], colorCodes["pink"], colorCodes["yellow"]];
+// main function
+(() => {
+    ctx.lineWidth = 2;
 
-ctx.lineWidth = 2;
+    ctx.scale(1,-1); // flip graph upside down so 0 is on the bottom
+    ctx.translate(0, -height); // fix position
 
-ctx.scale(1,-1); // flip graph upside down so 0 is on the bottom
-ctx.translate(0, -height); // fix position
-
-// draw first graph with no functions
-drawGraph();
+    // draw first graph with no functions
+    drawGraph();
+})();
