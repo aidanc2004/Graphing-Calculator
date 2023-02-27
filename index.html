@@ -10,8 +10,23 @@
     <title>Graphing Calculator</title>
 </head>
 <body>
+    <form id="x-y-settings">
+        <label for="xmin">xmin:</label>
+        <input type="number" name="xmin" id="xmin">
+        <br>
+        <label for="xmax">xmax:</label>
+        <input type="number" name="xmax" id="xmax">
+        <br>
+        <label for="ymin">ymin:</label>
+        <input type="number" name="ymin" id="ymin">
+        <br>
+        <label for="ymax">ymax:</label>
+        <input type="number" name="ymax" id="ymax">
+        <br>
+        <button id="x-y-update">Update graph</button>
+    </form>
     <canvas id="graph" width="1000" height="800" style="border: 1px solid black"></canvas>
-    <form id="form">
+    <form id="equation-form">
         <label for="equation">Equation:</label>
         <input type="text" name="equation" id="equation">
         <button id="submit">Submit</button>

@@ -1,6 +1,5 @@
 /*
     TODO:
-    - allow user to adjust xmin, xmax, ymin and ymax
     - allow user to remove functions
     - click to show point on function, ex. (1, 2)
     - add label for x and y axes
@@ -9,7 +8,9 @@
 
 let graph = document.getElementById("graph");
 let ctx = graph.getContext("2d");
-let form = document.getElementById("form");
+let equationForm = document.getElementById("equation-form"); // rename
+let xySettings = document.getElementById("x-y-settings");
+let xyUpdate = document.getElementById("x-y-update");
 let submitEquation = document.getElementById("submit");
 let equationInput = document.getElementById("equation");
 let equationList = document.getElementById("equations");
@@ -34,8 +35,9 @@ let functions = [
 
 let functionLetters = ['f', 'g', 'h', 'i', 'j', 'k'];
 
-// make inputting an equation not refresh the page
-form.addEventListener("submit", (event) => event.preventDefault());
+// make inputting an equation or new x/y value not refresh the page
+equationForm.addEventListener("submit", (event) => event.preventDefault());
+xySettings.addEventListener("submit", (event) => event.preventDefault());
 
 // add button to get equation from user
 submitEquation.addEventListener("click", () => {
@@ -76,6 +78,29 @@ let xmax = 5;
 // range of y values
 let ymin = -5;
 let ymax = 5;
+
+// update the xmin, xmax, ymin, ymax values and refresh graph
+function updateXY() {
+    // get inputs from DOM
+    let xminInput = document.getElementById("xmin");
+    let xmaxInput = document.getElementById("xmax");
+    let yminInput = document.getElementById("ymin");
+    let ymaxInput = document.getElementById("ymax");
+
+    // set variables to new inputs
+    xmin = Number(xminInput.value);
+    xmax = Number(xmaxInput.value);
+    ymin = Number(yminInput.value);
+    ymax = Number(ymaxInput.value);
+
+    // redraw graph to show new x and y range
+    drawGraph();
+}
+
+// update x and y range when button is clicked
+xyUpdate.addEventListener("click", () => {
+    updateXY();
+})
 
 // draw the x and y axis
 function drawAxes() {
