@@ -86,7 +86,7 @@ submitEquation.addEventListener("click", () => {
         f = math.evaluate(equation) // evaluate equation into javascript function using Math.js
         equationError.textContent = "";
     } catch (error) {
-        equationError.textContent = "ERROR";
+        equationError.textContent = error.toString();
         return;
     }
 
@@ -94,11 +94,10 @@ submitEquation.addEventListener("click", () => {
     try {
         f(1); // using x = 1 as an example
     } catch (error) {
-        equationError.textContent = "ERROR";
+        equationError.textContent = error.toString();
         return;
     }
     
-
     functions.push(f);
 
     // redraw graph with new function
