@@ -103,11 +103,11 @@ function updateXY() {
     let yminInput = document.getElementById("ymin");
     let ymaxInput = document.getElementById("ymax");
 
-    // set variables to new inputs
-    xmin = Number(xminInput.value);
-    xmax = Number(xmaxInput.value);
-    ymin = Number(yminInput.value);
-    ymax = Number(ymaxInput.value);
+    // set variables to new inputs or defaults
+    xmin = Number(xminInput.value) || -5;
+    xmax = Number(xmaxInput.value) || 5;
+    ymin = Number(yminInput.value) || -5;
+    ymax = Number(ymaxInput.value) || 5;
 
     // redraw graph to show new x and y range
     drawGraph();
