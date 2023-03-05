@@ -19,6 +19,8 @@ const equationList = document.getElementById("equations");
 const xyForm = document.getElementById("x-y-form");
 const xyUpdate = document.getElementById("x-y-update");
 
+const equationError = document.getElementById("error");
+
 // width and height of the canvas
 const width = graph.width;
 const height = graph.height;
@@ -56,11 +58,7 @@ let ymin = -5;
 let ymax = 5;
 
 // array of all functions of graph
-let functions = [
-    /*f = x => Math.pow(x, 2),
-    g = x => (5 * Math.sin(x)),
-    h = x => (x + 1) / (x - 1), // problems with vertical asymptotes*/
-];
+let functions = [];
 
 // make inputting an equation or new x/y value not refresh the page
 equationForm.addEventListener("submit", (event) => event.preventDefault());
@@ -83,7 +81,24 @@ submitEquation.addEventListener("click", () => {
     // get equation from user
     let equation = letter + "(x) = " + document.getElementById("equation").value;
 
-    f = math.evaluate(equation) // evaluate equation into javascript function using Math.js
+    // catch errors with evaluating equation
+    try {
+        f = math.evaluate(equation) // evaluate equation into javascript function using Math.js
+        equationError.textContent = "";
+    } catch (error) {
+        equationError.textContent = "ERROR";
+        return;
+    }
+
+    // catch errors with passing a value to the equation
+    try {
+        f(1); // using x = 1 as an example
+    } catch (error) {
+        equationError.textContent = "ERROR";
+        return;
+    }
+    
+
     functions.push(f);
 
     // redraw graph with new function
@@ -228,7 +243,12 @@ function drawGraph() {
             color = colorCodes["black"];
         }
 
-        drawFunction(f, color);
+        // catch errors with drawing function
+        //try {
+            drawFunction(f, color);
+        //} catch (error) {
+        //    equationError.textContent = "ERROR";
+        //}
     }
 }
 
