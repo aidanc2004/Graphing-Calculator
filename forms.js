@@ -8,11 +8,12 @@ const equationForm = document.getElementById("equation-form");
 const submitEquation = document.getElementById("submit-equation");
 const equationInput = document.getElementById("equation");
 const equationList = document.getElementById("equations");
-const equationError = document.getElementById("error");
+const equationError = document.getElementById("equation-error");
 
 // adjust x and y range
 const xyForm = document.getElementById("x-y-form");
 const xyUpdate = document.getElementById("x-y-update");
+const xyError = document.getElementById("x-y-error");
 
 // letter to use for function names (ex. f(x) = x^2 or g(x) = x^2)
 const functionLetters = ['f', 'g', 'h', 'i', 'j', 'k'];
@@ -29,11 +30,37 @@ function updateXY() {
     let yminInput = document.getElementById("ymin");
     let ymaxInput = document.getElementById("ymax");
 
-    // set variables to new inputs or defaults
-    xmin = Number(xminInput.value) || -5;
-    xmax = Number(xmaxInput.value) || 5;
-    ymin = Number(yminInput.value) || -5;
-    ymax = Number(ymaxInput.value) || 5;
+    // get value and cast to a number
+    let xminValue = Number(xminInput.value);
+    let xmaxValue = Number(xmaxInput.value);
+    let yminValue = Number(yminInput.value);
+    let ymaxValue = Number(ymaxInput.value);
+
+    // if the input was empty, use default value
+    if (xminInput.value == "") xminValue = -5;
+    if (xmaxInput.value == "") xmaxValue = 5;
+    if (yminInput.value == "") yminValue = -5;
+    if (ymaxInput.value == "") ymaxValue = 5;
+
+    // if min value isnt less than max value
+    if (!(xminValue < xmaxValue)) {
+        xyError.textContent = "Error: xmin must be less than xmax";
+        return;
+    }
+
+    if (!(yminValue < ymaxValue)) {
+        xyError.textContent = "Error: ymin must be less than ymax";
+        return;
+    }
+
+    // clear any previous errors
+    xyError.textContent = "";
+
+    // set variables to new inputs
+    xmin = xminValue;
+    xmax = xmaxValue;
+    ymin = yminValue;
+    ymax = ymaxValue;
 
     // redraw graph to show new x and y range
     drawGraph();
