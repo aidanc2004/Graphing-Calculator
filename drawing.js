@@ -8,8 +8,11 @@ const graph = document.getElementById("graph");
 const ctx = graph.getContext("2d");
 
 // width and height of the canvas
-const width = graph.width;
-const height = graph.height;
+graph.width = window.innerWidth - (window.innerWidth * 0.20);
+graph.height = window.innerHeight;
+
+let width = graph.width;
+let height = graph.height;
 
 // range of x values
 let xmin = -5;
@@ -42,6 +45,19 @@ const colors = [
     colorCodes["pink"],
     colorCodes["yellow"]
 ];
+
+// when the window is resized, update width and height
+window.addEventListener('resize', () => {
+    graph.width = window.innerWidth - (window.innerWidth * 0.20);
+    graph.height = window.innerHeight;
+
+    width = graph.width;
+    height = graph.height;
+
+    // refresh graph
+    setupGraph();
+    drawGraph();
+});
 
 // scale x and y values to match width and height of canvas
 function xScale(x) {
@@ -164,3 +180,4 @@ function drawGraph() {
         drawFunction(f, color);
     }
 }
+

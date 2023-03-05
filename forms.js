@@ -7,7 +7,7 @@ Deals with getting input from forms and using the input
 const equationForm = document.getElementById("equation-form");
 const submitEquation = document.getElementById("submit-equation");
 const equationInput = document.getElementById("equation");
-const equationList = document.getElementById("equations");
+const equationList = document.getElementById("equations-list");
 const equationError = document.getElementById("equation-error");
 
 // adjust x and y range

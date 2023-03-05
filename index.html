@@ -9,32 +9,40 @@
     <script src="main.js" defer></script>
     <!-- Math.js for turning math equations into JavaScript functions -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/7.5.1/math.min.js" defer></script>
+    <link rel="stylesheet" href="style.css">
     <title>Graphing Calculator</title>
 </head>
 <body>
-    <form id="x-y-form">
-        <label for="xmin">xmin:</label>
-        <input type="number" name="xmin" id="xmin" step="any">
-        <br>
-        <label for="xmax">xmax:</label>
-        <input type="number" name="xmax" id="xmax" step="any">
-        <br>
-        <label for="ymin">ymin:</label>
-        <input type="number" name="ymin" id="ymin" step="any">
-        <br>
-        <label for="ymax">ymax:</label>
-        <input type="number" name="ymax" id="ymax" step="any">
-        <br>
-        <button id="x-y-update">Update graph</button>
-    </form>
-    <p id="x-y-error"></p>
-    <canvas id="graph" width="1000" height="800" style="border: 1px solid black"></canvas>
-    <form id="equation-form">
-        <label for="equation">Equation:</label>
-        <input type="text" name="equation" id="equation">
-        <button id="submit-equation">Submit</button>
-    </form>
-    <p id="equation-error"></p>
-    <ul id="equations"></ul>
+    <div id="ui">
+        <div>
+            <form id="x-y-form">
+                <label for="xmin">xmin:</label>
+                <input type="number" name="xmin" id="xmin" step="any">
+                <br>
+                <label for="xmax">xmax:</label>
+                <input type="number" name="xmax" id="xmax" step="any">
+                <br>
+                <label for="ymin">ymin:</label>
+                <input type="number" name="ymin" id="ymin" step="any">
+                <br>
+                <label for="ymax">ymax:</label>
+                <input type="number" name="ymax" id="ymax" step="any">
+                <br>
+                <button id="x-y-update">Update graph</button>
+            </form>
+            <p id="x-y-error"></p>
+        </div>
+        <div>
+            <form id="equation-form">
+                <label for="equation">Equation:</label>
+                <input type="text" name="equation" id="equation">
+                <button id="submit-equation">Submit</button>
+            </form>
+            <p id="equation-error"></p>
+            <ul id="equations-list"></ul>
+        </div>
+    </div>
+    
+    <canvas id="graph" width="800" height="800"></canvas>
 </body>
 </html>
