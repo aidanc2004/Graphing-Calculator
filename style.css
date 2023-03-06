@@ -19,3 +19,7 @@ body {
 #equations-list {
     padding-left: 20px;
 }
+
+.delete {
+    margin-left: 10px;
+}

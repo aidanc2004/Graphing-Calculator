@@ -71,17 +71,13 @@ xyUpdate.addEventListener("click", updateXY);
 
 // add button to get equation from user
 submitEquation.addEventListener("click", () => {
-    // get number of functions to determine what letter to use
-    let numberOfFunctions = functions.length;
-
-    let letter; // letter to use for the function name
-
-    // if there are more functions then letters for the function, just use 'f'
-    if (numberOfFunctions >= functionLetters.length) {
-        letter = 'f';
-    } else {
-        letter = functionLetters[numberOfFunctions];
+    // if there are more functions than names
+    if (functions.length >= functionLetters.length) {
+        return;
     }
+
+    // get first letter that isnt already a function name
+    let letter = functionLetter();
 
     // get equation from user
     let equation = letter + "(x) = " + document.getElementById("equation").value;
@@ -112,5 +108,44 @@ submitEquation.addEventListener("click", () => {
     // add equation to list of equations
     let li = document.createElement('li');
     li.innerText = equation;
+
+    // button to delete equation
+    let del = document.createElement('button'); 
+    del.innerText = "x";
+    del.addEventListener("click", deleteFunction);
+    del.className = "delete";
+    li.appendChild(del);
+
+    // add to list of equations
     equationList.appendChild(li);
 })
+
+// delete a function from the array of functions and the list of functions
+function deleteFunction() {
+    let equation = this.parentNode.innerText;
+    let letter = equation[0];
+
+    functions.forEach(f => {
+        if (f.name == letter) {
+            functions = functions.filter(a => a != f);
+            equationList.removeChild(this.parentNode);
+            drawGraph();
+        }
+    });
+}
+
+// get a letter to use for a function name that isnt already being used
+function functionLetter() {
+    // get all currently used function names
+    let functionNames = [];
+    functions.forEach(f => {
+        functionNames.push(f.name);
+    });
+
+    // choose a letter and return it
+    for (let i = 0; i < functionLetters.length; i++) {
+        if (!functionNames.includes(functionLetters[i])) {
+            return functionLetters[i];
+        }
+    }
+}

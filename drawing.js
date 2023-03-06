@@ -165,6 +165,8 @@ function drawGraph() {
     // draw x and y axis
     drawAxes();
 
+    console.log(functions)
+
     // begin drawing functions
     for (let key in functions) {
         let f = functions[key];
