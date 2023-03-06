@@ -7,8 +7,13 @@ Deals with drawing to the graph
 const graph = document.getElementById("graph");
 const ctx = graph.getContext("2d");
 
+// width of user interface
+const uiWidth = document.getElementById("ui").clientWidth;
+
+console.log(uiWidth);
+
 // width and height of the canvas
-graph.width = window.innerWidth - (window.innerWidth * 0.20);
+graph.width = window.innerWidth - uiWidth;
 graph.height = window.innerHeight;
 
 let width = graph.width;
@@ -48,7 +53,7 @@ const colors = [
 
 // when the window is resized, update width and height
 window.addEventListener('resize', () => {
-    graph.width = window.innerWidth - (window.innerWidth * 0.20);
+    graph.width = window.innerWidth - uiWidth;
     graph.height = window.innerHeight;
 
     width = graph.width;
