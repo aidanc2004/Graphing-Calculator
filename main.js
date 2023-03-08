@@ -5,7 +5,6 @@ Program starting point
 
 /*
     TODO:
-    - click to show point on function, ex. (1, 2)
     - more possible function names
     - change xmin = a, xmax = b, to xrange = [a, b]
     - add label for x and y axes
