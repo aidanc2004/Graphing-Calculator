@@ -53,14 +53,32 @@ const colors = [
     colorCodes["yellow"]
 ];
 
+// scale from mouse position to graph coordinate 
+const xUpscale = x => x * (xmax - xmin) / width + xmin;
+const yUpscale = y => y * (ymax - ymin) / height + ymin;
+
 // show the point clicked on screen
 graph.addEventListener("click", (e) => {
     // get mouse x and y
     const x = e.clientX - uiWidth;
     const y = e.clientY;
 
-    // set point coordinate to mouse position
-    point = [x, y];
+    // mouse y position on graph
+    const mouseY = -yUpscale(y);
+
+    // get all function outputs at x
+    let outputs = [];
+    for (let i = 0; i < functions.length; i++) {
+        outputs[i] = functions[i](xUpscale(x));
+    }
+
+    // get closest value to the mouses y position
+    let closest = outputs.reduce((prev, curr) => {
+        return ((Math.abs(curr - mouseY) < Math.abs(prev - mouseY)) ? curr : prev);
+    });
+
+    // set point coordinate to first function in array
+    point = [xUpscale(x), closest];
 
     drawGraph(); // redraw graph to clear previous point
 
@@ -69,22 +87,18 @@ graph.addEventListener("click", (e) => {
 
 // draw the clicked point onto the screen
 function drawPoint() {
-    // functions to scale from mouse position to graph coordinate 
-    const xUpscale = x => x * (xmax - xmin) / width + xmin;
-    const yUpscale = y => y * (ymax - ymin) / height + ymin;
-
     const [x, y] = point;
 
-    // scale from mouse position to graph coordinate
-    const xUpscaled = xUpscale(x).toFixed(2);
-    const yUpscaled = -yUpscale(y).toFixed(2);
+    // round x and y to 2 decimal points
+    const xRound = x.toFixed(2);
+    const yRound = y.toFixed(2);
 
     // flip graph back to the original configuration so that the
     // text is normal
     ctx.scale(1,-1);
     ctx.translate(0, -height)
 
-    ctx.fillText(`(${xUpscaled}, ${yUpscaled})`, x, y);
+    ctx.fillText(`(${xRound}, ${yRound})`, xScale(x), yScale(-y));
     
     ctx.scale(1,-1);
     ctx.translate(0, -height);
