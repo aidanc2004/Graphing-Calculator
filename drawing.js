@@ -27,6 +27,8 @@ let ymax = 5;
 // array of all functions of graph
 let functions = [];
 
+// current point clicked, set to (-100, -100) by default
+// so it doesnt show on graph
 let point = [-100, -100];
 
 // object of color codes
@@ -51,12 +53,13 @@ const colors = [
     colorCodes["yellow"]
 ];
 
+// show the point clicked on screen
 graph.addEventListener("click", (e) => {
     // get mouse x and y
     const x = e.clientX - uiWidth;
     const y = e.clientY;
 
-    // set point coordnates to mouse position
+    // set point coordinate to mouse position
     point = [x, y];
 
     drawGraph(); // redraw graph to clear previous point
@@ -66,12 +69,13 @@ graph.addEventListener("click", (e) => {
 
 // draw the clicked point onto the screen
 function drawPoint() {
-    // functions to scale from mouse position to graph coordnate 
+    // functions to scale from mouse position to graph coordinate 
     const xUpscale = x => x * (xmax - xmin) / width + xmin;
     const yUpscale = y => y * (ymax - ymin) / height + ymin;
 
     const [x, y] = point;
 
+    // scale from mouse position to graph coordinate
     const xUpscaled = xUpscale(x).toFixed(2);
     const yUpscaled = -yUpscale(y).toFixed(2);
 
@@ -100,15 +104,10 @@ window.addEventListener('resize', () => {
 });
 
 // scale x and y values to match width and height of canvas
-function xScale(x) {
-    return (x - xmin) * (width - 0) / (xmax - xmin);
-}
+const xScale = x => (x - xmin) * (width - 0) / (xmax - xmin);
+const yScale = y => (y - ymin) * (height - 0) / (ymax - ymin);
 
-function yScale(y) {
-    return (y - ymin) * (height - 0) / (ymax - ymin);
-}
-
-// set up graph for adding functions
+// set line width, then scale and translate graph so y goes upwards instead of down
 function setupGraph() {
     ctx.lineWidth = 2; // set default line width
 
@@ -143,15 +142,12 @@ function drawAxes() {
 
 // draw a grid on the graph
 function drawGrid() {
-    // position on the graph where x or y = 0
-    const xZero = yScale(0);
-    const yZero = xScale(0);
-
     // draw grid lines in grey
     ctx.strokeStyle = colorCodes["grey"];
 
     // x lines
     for (let i = xmin; i < xmax; i++) {
+        // only get x at whole numbers
         let x = xScale(Math.ceil(i));
         
         ctx.beginPath()
@@ -163,6 +159,7 @@ function drawGrid() {
 
     // y lines
     for (let i = ymin; i < ymax; i++) {
+        // only get y at whole numbers
         let y = yScale(Math.ceil(i));
 
         ctx.beginPath()
@@ -189,7 +186,6 @@ function drawFunction(f, color) {
     }
 
     ctx.stroke();
-
     ctx.closePath();
 
     ctx.strokeStyle = colorCodes["black"];
@@ -201,9 +197,8 @@ function drawGraph() {
     ctx.clearRect(0, 0, width, height);
 
     drawGrid();
-
-    // draw x and y axis
-    drawAxes();
+    
+    drawAxes(); // draw x and y axis
 
     // begin drawing functions
     for (let key in functions) {
@@ -220,6 +215,6 @@ function drawGraph() {
         drawFunction(f, color);
     }
 
-    drawPoint();
+    drawPoint(); // draw the selected point
 }
 

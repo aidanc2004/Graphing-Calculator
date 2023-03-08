@@ -31,3 +31,8 @@ button {
     margin-top: 0px;
     margin-bottom: 0px;
 }
+
+#x-y-error,
+#equation-error {
+    color: red;
+}

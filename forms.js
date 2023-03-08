@@ -57,10 +57,7 @@ function updateXY() {
     xyError.textContent = "";
 
     // set variables to new inputs
-    xmin = xminValue;
-    xmax = xmaxValue;
-    ymin = yminValue;
-    ymax = ymaxValue;
+    [xmin, xmax, ymin, ymax] = [xminValue, xmaxValue, yminValue, ymaxValue];
 
     // redraw graph to show new x and y range
     drawGraph();
@@ -71,10 +68,8 @@ xyUpdate.addEventListener("click", updateXY);
 
 // add button to get equation from user
 submitEquation.addEventListener("click", () => {
-    // if there are more functions than names
-    if (functions.length >= functionLetters.length) {
-        return;
-    }
+    // if there are more functions than names, dont add equation
+    if (functions.length >= functionLetters.length) return;
 
     // get first letter that isnt already a function name
     let letter = functionLetter();
@@ -105,7 +100,14 @@ submitEquation.addEventListener("click", () => {
     // redraw graph with new function
     drawGraph();
 
-    // add equation to list of equations
+    // add to list of equations
+    equationList.appendChild(
+        createListItem(equation));
+})
+
+// create the list item for an equation
+function createListItem(equation) {
+    // create li
     let li = document.createElement('li');
     li.innerText = equation;
 
@@ -114,22 +116,23 @@ submitEquation.addEventListener("click", () => {
     del.innerText = "x";
     del.addEventListener("click", deleteFunction);
     del.className = "delete";
+    
     li.appendChild(del);
 
-    // add to list of equations
-    equationList.appendChild(li);
-})
+    return li;
+}
 
 // delete a function from the array of functions and the list of functions
 function deleteFunction() {
     let equation = this.parentNode.innerText;
-    let letter = equation[0];
+    let letter = equation[0]; // name of the function, only first letter
 
     functions.forEach(f => {
+        // if the function names are the same, remove it
         if (f.name == letter) {
-            functions = functions.filter(a => a != f);
-            equationList.removeChild(this.parentNode);
-            drawGraph();
+            functions = functions.filter(a => a != f); // remove function
+            equationList.removeChild(this.parentNode); // remove li
+            drawGraph(); // redraw graph to show change
         }
     });
 }
