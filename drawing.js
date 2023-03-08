@@ -10,8 +10,6 @@ const ctx = graph.getContext("2d");
 // width of user interface
 const uiWidth = document.getElementById("ui").clientWidth;
 
-console.log(uiWidth);
-
 // width and height of the canvas
 graph.width = window.innerWidth - uiWidth;
 graph.height = window.innerHeight;
@@ -28,6 +26,8 @@ let ymax = 5;
 
 // array of all functions of graph
 let functions = [];
+
+let point = [-100, -100];
 
 // object of color codes
 const colorCodes = {
@@ -50,6 +50,41 @@ const colors = [
     colorCodes["pink"],
     colorCodes["yellow"]
 ];
+
+graph.addEventListener("click", (e) => {
+    // get mouse x and y
+    const x = e.clientX - uiWidth;
+    const y = e.clientY;
+
+    // set point coordnates to mouse position
+    point = [x, y];
+
+    drawGraph(); // redraw graph to clear previous point
+
+    drawPoint(); // draw new point
+});
+
+// draw the clicked point onto the screen
+function drawPoint() {
+    // functions to scale from mouse position to graph coordnate 
+    const xUpscale = x => x * (xmax - xmin) / width + xmin;
+    const yUpscale = y => y * (ymax - ymin) / height + ymin;
+
+    const [x, y] = point;
+
+    const xUpscaled = xUpscale(x).toFixed(2);
+    const yUpscaled = -yUpscale(y).toFixed(2);
+
+    // flip graph back to the original configuration so that the
+    // text is normal
+    ctx.scale(1,-1);
+    ctx.translate(0, -height)
+
+    ctx.fillText(`(${xUpscaled}, ${yUpscaled})`, x, y);
+    
+    ctx.scale(1,-1);
+    ctx.translate(0, -height);
+}
 
 // when the window is resized, update width and height
 window.addEventListener('resize', () => {
@@ -170,8 +205,6 @@ function drawGraph() {
     // draw x and y axis
     drawAxes();
 
-    console.log(functions)
-
     // begin drawing functions
     for (let key in functions) {
         let f = functions[key];
@@ -186,5 +219,7 @@ function drawGraph() {
 
         drawFunction(f, color);
     }
+
+    drawPoint();
 }
 
