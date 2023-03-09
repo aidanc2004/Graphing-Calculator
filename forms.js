@@ -22,8 +22,8 @@ const functionLetters = ['f', 'g', 'h', 'i', 'j', 'k'];
 equationForm.addEventListener("submit", (event) => event.preventDefault());
 xyForm.addEventListener("submit", (event) => event.preventDefault());
 
-// update the xmin, xmax, ymin, ymax values and refresh graph
-function updateXY() {
+// update the xmin, xmax, ymin, ymax values and refresh graph when button is clicked
+xyUpdate.addEventListener("click", () => {
     // get inputs from DOM
     let xminInput = document.getElementById("xmin");
     let xmaxInput = document.getElementById("xmax");
@@ -61,10 +61,7 @@ function updateXY() {
 
     // redraw graph to show new x and y range
     drawGraph();
-}
-
-// update x and y range when button is clicked
-xyUpdate.addEventListener("click", updateXY);
+});
 
 // add button to get equation from user
 submitEquation.addEventListener("click", () => {

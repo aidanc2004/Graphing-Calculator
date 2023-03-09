@@ -125,12 +125,25 @@ function drawPoint() {
     const xRound = point.x.toFixed(2);
     const yRound = point.y.toFixed(2);
 
+    const pointX = xGraphToCanvas(point.x);
+    const pointY = yGraphToCanvas(-point.y);
+
+    // draw the point on the screen
+    ctx.beginPath();
+    ctx.strokeStyle = "red"; // TODO: change to current function color
+    ctx.fillStyle = "red";
+    ctx.arc(pointX, yGraphToCanvas(point.y), 2, 0, 2 * Math.PI);
+    ctx.fill();
+    ctx.stroke()
+    ctx.closePath();
+
     // flip graph back to the original configuration so that the
     // text is normal
     ctx.scale(1,-1);
-    ctx.translate(0, -height)
+    ctx.translate(0, -height);
 
-    ctx.fillText(`(${xRound}, ${yRound})`, xGraphToCanvas(point.x), yGraphToCanvas(-point.y));
+    ctx.fillStyle = "black";
+    ctx.fillText(`(${xRound}, ${yRound})`, pointX+5, pointY);
     
     ctx.scale(1,-1);
     ctx.translate(0, -height);
