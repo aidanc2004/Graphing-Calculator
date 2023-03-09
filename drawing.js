@@ -29,7 +29,10 @@ let functions = [];
 
 // current point clicked, set to (-100, -100) by default
 // so it doesnt show on graph
-let point = [-100, -100];
+let point = {
+    x: -100,
+    y: -100,
+}
 
 // object of color codes
 const colorCodes = {
@@ -53,23 +56,30 @@ const colors = [
     colorCodes["yellow"]
 ];
 
+// scale x and y values to match width and height of canvas
+const xGraphToCanvas = x => (x - xmin) * (width - 0) / (xmax - xmin);
+const yGraphToCanvas = y => (y - ymin) * (height - 0) / (ymax - ymin);
+
 // scale from mouse position to graph coordinate 
-const xUpscale = x => x * (xmax - xmin) / width + xmin;
-const yUpscale = y => y * (ymax - ymin) / height + ymin;
+const xMouseToGraph = x => x * (xmax - xmin) / width + xmin;
+const yMouseToGraph = y => y * (ymax - ymin) / height + ymin;
 
 // show the point clicked on screen
 graph.addEventListener("click", (e) => {
+    // if there are no current functions, just return
+    if (functions.length == 0) return;
+
     // get mouse x and y
     const x = e.clientX - uiWidth;
     const y = e.clientY;
 
     // mouse y position on graph
-    const mouseY = -yUpscale(y);
+    const mouseY = -yMouseToGraph(y);
 
     // get all function outputs at x
     let outputs = [];
     for (let i = 0; i < functions.length; i++) {
-        outputs[i] = functions[i](xUpscale(x));
+        outputs[i] = functions[i](xMouseToGraph(x));
     }
 
     // get closest value to the mouses y position
@@ -78,31 +88,15 @@ graph.addEventListener("click", (e) => {
     });
 
     // set point coordinate to first function in array
-    point = [xUpscale(x), closest];
+    point = {
+        x: xMouseToGraph(x),
+        y: closest,
+    };
 
     drawGraph(); // redraw graph to clear previous point
 
     drawPoint(); // draw new point
 });
-
-// draw the clicked point onto the screen
-function drawPoint() {
-    const [x, y] = point;
-
-    // round x and y to 2 decimal points
-    const xRound = x.toFixed(2);
-    const yRound = y.toFixed(2);
-
-    // flip graph back to the original configuration so that the
-    // text is normal
-    ctx.scale(1,-1);
-    ctx.translate(0, -height)
-
-    ctx.fillText(`(${xRound}, ${yRound})`, xScale(x), yScale(-y));
-    
-    ctx.scale(1,-1);
-    ctx.translate(0, -height);
-}
 
 // when the window is resized, update width and height
 window.addEventListener('resize', () => {
@@ -117,10 +111,6 @@ window.addEventListener('resize', () => {
     drawGraph();
 });
 
-// scale x and y values to match width and height of canvas
-const xScale = x => (x - xmin) * (width - 0) / (xmax - xmin);
-const yScale = y => (y - ymin) * (height - 0) / (ymax - ymin);
-
 // set line width, then scale and translate graph so y goes upwards instead of down
 function setupGraph() {
     ctx.lineWidth = 2; // set default line width
@@ -129,11 +119,28 @@ function setupGraph() {
     ctx.translate(0, -height); // fix position
 }
 
+// draw the clicked point onto the screen
+function drawPoint() {
+    // round x and y to 2 decimal points
+    const xRound = point.x.toFixed(2);
+    const yRound = point.y.toFixed(2);
+
+    // flip graph back to the original configuration so that the
+    // text is normal
+    ctx.scale(1,-1);
+    ctx.translate(0, -height)
+
+    ctx.fillText(`(${xRound}, ${yRound})`, xGraphToCanvas(point.x), yGraphToCanvas(-point.y));
+    
+    ctx.scale(1,-1);
+    ctx.translate(0, -height);
+}
+
 // draw the x and y axis
 function drawAxes() {
     // position on the graph where x or y = 0
-    const xZero = yScale(0);
-    const yZero = xScale(0);
+    const xZero = yGraphToCanvas(0);
+    const yZero = xGraphToCanvas(0);
 
     ctx.strokeStyle = colorCodes["black"];
 
@@ -162,7 +169,7 @@ function drawGrid() {
     // x lines
     for (let i = xmin; i < xmax; i++) {
         // only get x at whole numbers
-        let x = xScale(Math.ceil(i));
+        let x = xGraphToCanvas(Math.ceil(i));
         
         ctx.beginPath()
         ctx.moveTo(x, 0);
@@ -174,7 +181,7 @@ function drawGrid() {
     // y lines
     for (let i = ymin; i < ymax; i++) {
         // only get y at whole numbers
-        let y = yScale(Math.ceil(i));
+        let y = yGraphToCanvas(Math.ceil(i));
 
         ctx.beginPath()
         ctx.moveTo(0, y);
@@ -193,8 +200,8 @@ function drawFunction(f, color) {
     ctx.strokeStyle = color;
 
     for (let i = xmin; i < xmax; i += 0.01) {
-        let x = xScale(i);
-        let y = yScale(f(i));
+        let x = xGraphToCanvas(i);
+        let y = yGraphToCanvas(f(i));
 
         ctx.lineTo(x, y)
     }

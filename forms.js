@@ -72,7 +72,7 @@ submitEquation.addEventListener("click", () => {
     if (functions.length >= functionLetters.length) return;
 
     // get first letter that isnt already a function name
-    let letter = functionLetter();
+    let letter = chooseFunctionLetter();
 
     // get equation from user
     let equation = letter + "(x) = " + document.getElementById("equation").value;
@@ -138,7 +138,7 @@ function deleteFunction() {
 }
 
 // get a letter to use for a function name that isnt already being used
-function functionLetter() {
+function chooseFunctionLetter() {
     // get all currently used function names
     let functionNames = [];
     functions.forEach(f => {
