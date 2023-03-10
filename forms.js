@@ -91,8 +91,13 @@ submitEquation.addEventListener("click", () => {
         equationError.textContent = error.toString();
         return;
     }
-    
-    functions.push(f);
+
+    // choose color
+    let color = chooseFunctionColor();
+
+    // test, fix color
+    functions.push(
+        createFunction(equation, f, letter, color));
 
     // redraw graph with new function
     drawGraph();
@@ -148,4 +153,23 @@ function chooseFunctionLetter() {
             return functionLetters[i];
         }
     }
+}
+
+// get a letter to use for a function name that isnt already being used
+function chooseFunctionColor() {
+    // get all currently used function names
+    let functionColors = [];
+    functions.forEach(f => {
+        functionColors.push(f.color);
+    });
+
+    // choose a color
+    for (let i = 0; i < colors.length; i++) {
+        if (!functionColors.includes(colors[i])) {
+            return colors[i];
+        }
+    }
+
+    // if out of useable colors, use black
+    return "black";
 }

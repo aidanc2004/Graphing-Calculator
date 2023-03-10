@@ -27,11 +27,21 @@ let ymax = 5;
 // array of all functions of graph
 let functions = [];
 
+function createFunction(equation, func, name, color) {
+    return {
+        equation,
+        func,
+        name,
+        color,
+    };
+}
+
 // current point clicked, set to (-100, -100) by default
 // so it doesnt show on graph
 let point = {
     x: -100,
     y: -100,
+    color: "",
 }
 
 // object of color codes
@@ -79,11 +89,10 @@ graph.addEventListener("click", (e) => {
     // get all function outputs at x
     let outputs = [];
     for (let i = 0; i < functions.length; i++) {
-        outputs[i] = functions[i](xMouseToGraph(x));
+        outputs[i] = functions[i].func(xMouseToGraph(x));
     }
 
-    // get closest value to the mouses y position
-    let closest = outputs.reduce((prev, curr) => {
+    let closest = outputs.reduce((curr, prev) => {
         return ((Math.abs(curr - mouseY) < Math.abs(prev - mouseY)) ? curr : prev);
     });
 
@@ -91,6 +100,8 @@ graph.addEventListener("click", (e) => {
     point = {
         x: xMouseToGraph(x),
         y: closest,
+        // chooses first function if functions overlap, fix
+        color: functions[outputs.indexOf(closest)].color
     };
 
     drawGraph(); // redraw graph to clear previous point
@@ -130,8 +141,8 @@ function drawPoint() {
 
     // draw the point on the screen
     ctx.beginPath();
-    ctx.strokeStyle = "red"; // TODO: change to current function color
-    ctx.fillStyle = "red";
+    ctx.strokeStyle = point.color;
+    ctx.fillStyle = point.color;
     ctx.arc(pointX, yGraphToCanvas(point.y), 2, 0, 2 * Math.PI);
     ctx.fill();
     ctx.stroke()
@@ -236,15 +247,8 @@ function drawGraph() {
 
     // begin drawing functions
     for (let key in functions) {
-        let f = functions[key];
-        let color;
-
-        // if more functions than colors, use black
-        if (key < colors.length) {
-            color = colors[key];
-        } else {
-            color = colorCodes["black"];
-        }
+        let f = functions[key].func;
+        let color = functions[key].color; // fjdsjlfasjkldkjfsjkakjlfsdkjla
 
         drawFunction(f, color);
     }
