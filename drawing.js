@@ -17,12 +17,9 @@ graph.height = window.innerHeight;
 let width = graph.width;
 let height = graph.height;
 
-// range of x values
-let xmin = -5;
-let xmax = 5;
-// range of y values
-let ymin = -5;
-let ymax = 5;
+// range of x and y values
+let xrange = [-5, 5];
+let yrange = [-5, 5];
 
 // array of all functions of graph
 let functions = [];
@@ -67,12 +64,12 @@ const colors = [
 ];
 
 // scale x and y values to match width and height of canvas
-const xGraphToCanvas = x => (x - xmin) * (width - 0) / (xmax - xmin);
-const yGraphToCanvas = y => (y - ymin) * (height - 0) / (ymax - ymin);
+const xGraphToCanvas = x => (x - xrange[0]) * (width - 0) / (xrange[1] - xrange[0]);
+const yGraphToCanvas = y => (y - yrange[0]) * (height - 0) / (yrange[1] - yrange[0]);
 
 // scale from mouse position to graph coordinate 
-const xMouseToGraph = x => x * (xmax - xmin) / width + xmin;
-const yMouseToGraph = y => y * (ymax - ymin) / height + ymin;
+const xMouseToGraph = x => x * (xrange[1] - xrange[0]) / width + xrange[0];
+const yMouseToGraph = y => y * (yrange[1] - yrange[0]) / height + yrange[0];
 
 // show the point clicked on screen
 graph.addEventListener("click", (e) => {
@@ -191,7 +188,7 @@ function drawGrid() {
     ctx.strokeStyle = colorCodes["grey"];
 
     // x lines
-    for (let i = xmin; i < xmax; i++) {
+    for (let i = xrange[0]; i < xrange[1]; i++) {
         // only get x at whole numbers
         let x = xGraphToCanvas(Math.ceil(i));
         
@@ -203,7 +200,7 @@ function drawGrid() {
     }
 
     // y lines
-    for (let i = ymin; i < ymax; i++) {
+    for (let i = yrange[0]; i < yrange[1]; i++) {
         // only get y at whole numbers
         let y = yGraphToCanvas(Math.ceil(i));
 
@@ -223,7 +220,7 @@ function drawFunction(f, color) {
 
     ctx.strokeStyle = color;
 
-    for (let i = xmin; i < xmax; i += 0.01) {
+    for (let i = xrange[0]; i < xrange[1]; i += 0.01) {
         let x = xGraphToCanvas(i);
         let y = yGraphToCanvas(f(i));
 

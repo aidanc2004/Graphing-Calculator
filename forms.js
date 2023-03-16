@@ -19,8 +19,6 @@ const xyError = document.getElementById("x-y-error");
 // excludes 'x', because its used for the functions variable
 const functionLetters = "qwertyuiopasdfghjklzcvbnm".split('').sort();
 
-console.log(functionLetters);
-
 // make inputting an equation or new x/y value not refresh the page
 equationForm.addEventListener("submit", (event) => event.preventDefault());
 xyForm.addEventListener("submit", (event) => event.preventDefault());
@@ -60,7 +58,10 @@ xyUpdate.addEventListener("click", () => {
     xyError.textContent = "";
 
     // set variables to new inputs
-    [xmin, xmax, ymin, ymax] = [xminValue, xmaxValue, yminValue, ymaxValue];
+    xrange = [xminValue, xmaxValue];
+    yrange = [yminValue, ymaxValue];
+
+    //[xmin, xmax, ymin, ymax] = [xminValue, xmaxValue, yminValue, ymaxValue];
 
     // redraw graph to show new x and y range
     drawGraph();
