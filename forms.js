@@ -16,7 +16,10 @@ const xyUpdate = document.getElementById("x-y-update");
 const xyError = document.getElementById("x-y-error");
 
 // letter to use for function names (ex. f(x) = x^2 or g(x) = x^2)
-const functionLetters = ['f', 'g', 'h', 'i', 'j', 'k'];
+// excludes 'x', because its used for the functions variable
+const functionLetters = "qwertyuiopasdfghjklzcvbnm".split('').sort();
+
+console.log(functionLetters);
 
 // make inputting an equation or new x/y value not refresh the page
 equationForm.addEventListener("submit", (event) => event.preventDefault());
