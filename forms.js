@@ -15,6 +15,11 @@ const xyForm = document.getElementById("x-y-form");
 const xyUpdate = document.getElementById("x-y-update");
 const xyError = document.getElementById("x-y-error");
 
+// help menu
+const helpButton = document.getElementById("help");
+const helpMenu = document.getElementById("help-menu");
+const helpLoadEquations = document.getElementById("help-load");
+
 // letter to use for function names (ex. f(x) = x^2 or g(x) = x^2)
 // excludes 'x', because its used for the functions variable
 const functionLetters = "qwertyuiopasdfghjklzcvbnm".split('').sort();
@@ -69,6 +74,12 @@ xyUpdate.addEventListener("click", () => {
 
 // add button to get equation from user
 submitEquation.addEventListener("click", () => {
+    const value = document.getElementById("equation").value;
+    addFunction(value);
+});
+
+// add an equation from input or argument
+function addFunction(value) {
     // if there are more functions than names, dont add equation
     if (functions.length >= functionLetters.length) return;
 
@@ -76,7 +87,9 @@ submitEquation.addEventListener("click", () => {
     let letter = chooseFunctionLetter();
 
     // get equation from user
-    let equation = letter + "(x) = " + document.getElementById("equation").value;
+    let equation = letter + "(x) = " + value;
+
+    console.log(equation);
 
     // catch errors with evaluating equation
     try {
@@ -109,7 +122,33 @@ submitEquation.addEventListener("click", () => {
     // add to list of equations
     equationList.appendChild(
         createListItem(equation));
-})
+}
+
+/*
+ * Help Menu
+ */
+
+// show and hide help menu
+helpButton.addEventListener("click", () => {
+    const display = helpMenu.style.display;
+
+    if (display === "block") {
+        helpMenu.style.display = "none";
+    } else {
+        helpMenu.style.display = "block";
+    }
+});
+
+// load example equations into graph
+helpLoadEquations.addEventListener("click", () => {
+    addFunction("x^2 + 2x + 1");
+    addFunction("3sin(1.5)");
+    addFunction("(x+1)/(x-1)");
+});
+
+/*
+ * Helper functions
+ */
 
 // create the list item for an equation
 function createListItem(equation) {

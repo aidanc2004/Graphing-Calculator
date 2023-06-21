@@ -5,8 +5,8 @@ Program starting point
 
 /*
     TODO:
-    - change xmin = a, xmax = b, to xrange = [a, b]
-    - fix vertical asymptotes
+    - fix vertical asymptotes line
+    - vertical asymptotes dont show up sometimes
 */
 
 (() => {
