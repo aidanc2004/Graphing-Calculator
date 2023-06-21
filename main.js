@@ -6,7 +6,7 @@ Program starting point
 /*
     TODO:
     - fix vertical asymptotes line
-    - vertical asymptotes dont show up sometimes
+    - vertical asymptotes dont render unless there is another equation behind it
 */
 
 (() => {
