@@ -36,3 +36,11 @@ button {
 #equation-error {
     color: red;
 }
+
+#help {
+    width: 1.5rem;
+    height: 1.5rem;
+    position:absolute;
+    bottom: 1rem;
+    left: 1rem;
+}

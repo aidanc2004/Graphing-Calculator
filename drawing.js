@@ -11,8 +11,8 @@ const ctx = graph.getContext("2d");
 const uiWidth = document.getElementById("ui").clientWidth;
 
 // width and height of the canvas
-graph.width = window.innerWidth - uiWidth;
-graph.height = window.innerHeight;
+graph.width = window.innerWidth - uiWidth - 1;
+graph.height = window.innerHeight - 1;
 
 let width = graph.width;
 let height = graph.height;
@@ -108,8 +108,8 @@ graph.addEventListener("click", (e) => {
 
 // when the window is resized, update width and height
 window.addEventListener('resize', () => {
-    graph.width = window.innerWidth - uiWidth;
-    graph.height = window.innerHeight;
+    graph.width = window.innerWidth - uiWidth - 1;
+    graph.height = window.innerHeight - 1;
 
     width = graph.width;
     height = graph.height;
