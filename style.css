@@ -35,7 +35,6 @@ button {
     border-radius: 0.2rem;
 }
 
-
 button:active {
     background-color: #f0f0f0;
 }
@@ -72,7 +71,7 @@ button:active {
 #help {
     width: 1.5rem;
     height: 1.5rem;
-    position:absolute;
+    position: absolute;
     bottom: 1rem;
     left: 1rem;
 }
@@ -105,4 +104,11 @@ button:active {
 
 #help-menu p, button, ul {
     margin-bottom: 0.5rem;
+}
+
+#author {
+    position: absolute;
+    bottom: 0px;
+    font-size: 0.8rem;
+    color: #bbb;
 }

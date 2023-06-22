@@ -146,6 +146,18 @@ helpLoadEquations.addEventListener("click", () => {
     addFunction("(x+1)/(x-1)");
 });
 
+// close help menu with you click away
+document.addEventListener("click", (event) => {
+    const display = helpMenu.style.display;
+
+    if (display === "block" &&              // if menu is open
+        !helpMenu.contains(event.target) && // dont close if clicking help menu
+        event.target !== helpButton) {      // dont close if clicking help button
+        
+        helpMenu.style.display = "none";
+    }
+})
+
 /*
  * Helper functions
  */
