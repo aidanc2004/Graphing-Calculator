@@ -150,7 +150,7 @@ helpButton.addEventListener("click", () => {
 // load example equations into graph
 helpLoadEquations.addEventListener("click", () => {
     addFunction("x^2 + 2x + 1");
-    addFunction("3sin(1.5)");
+    addFunction("3sin(1.5x)");
     addFunction("(x+1)/(x-1)");
 });
 
