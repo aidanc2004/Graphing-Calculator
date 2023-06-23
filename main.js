@@ -1,7 +1,7 @@
 /*
-main.js
-Program starting point
-*/
+ * main.js
+ * Program starting point
+ */
 
 /*
     TODO:
@@ -11,5 +11,5 @@ Program starting point
 
 (() => {
     setupGraph(); // set up graph for adding functions
-    drawGraph(); // draw first graph with no functions
+    drawGraph();  // draw first graph with no functions
 })();

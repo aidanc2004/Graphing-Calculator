@@ -1,7 +1,7 @@
 /*
-drawing.js
-Deals with drawing to the graph
-*/
+ * drawing.js
+ * Handles drawing to the graph
+ */
 
 // canvas and context
 const graph = document.getElementById("graph");
@@ -245,7 +245,7 @@ function drawGraph() {
     // begin drawing functions
     for (let key in functions) {
         let f = functions[key].func;
-        let color = functions[key].color; // fjdsjlfasjkldkjfsjkakjlfsdkjla
+        let color = functions[key].color;
 
         drawFunction(f, color);
     }

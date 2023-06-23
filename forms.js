@@ -1,7 +1,7 @@
 /*
-forms.js
-Deals with getting input from forms and using the input
-*/
+ * forms.js
+ * Handles getting input from forms and using the input
+ */
 
 // submiting equations
 const equationForm = document.getElementById("equation-form");
@@ -27,6 +27,10 @@ const functionLetters = "qwertyuiopasdfghjklzcvbnm".split('').sort();
 // make inputting an equation or new x/y value not refresh the page
 equationForm.addEventListener("submit", (event) => event.preventDefault());
 xyForm.addEventListener("submit", (event) => event.preventDefault());
+
+/*
+ * X/Y Range
+ */
 
 // update the xmin, xmax, ymin, ymax values and refresh graph when button is clicked
 xyUpdate.addEventListener("click", () => {
@@ -71,6 +75,10 @@ xyUpdate.addEventListener("click", () => {
     // redraw graph to show new x and y range
     drawGraph();
 });
+
+/*
+ * Equations
+ */
 
 // add button to get equation from user
 submitEquation.addEventListener("click", () => {
