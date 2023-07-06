@@ -51,6 +51,7 @@ const colorCodes = {
     "orange": "#ff8a00",
     "pink": "#ff60fe",
     "yellow": "#d9ec00",
+    "white": "#ffffff",
 };
 
 // array of colors to use for functions
@@ -238,11 +239,8 @@ function drawGraph() {
     // clear canvas
     ctx.clearRect(0, 0, width, height);
 
-    // Fix vertical asymptotes by clipping graph with rectangle
-    ctx.rect(0, 0, width, height)
-    ctx.stroke()
-    ctx.clip()
-
+    clipGraph(); // fix asymptotes
+    
     drawGrid();
     
     drawAxes(); // draw x and y axis
@@ -254,7 +252,14 @@ function drawGraph() {
 
         drawFunction(f, color);
     }
-
-    drawPoint(); // draw the selected point
 }
 
+// Fix vertical asymptotes by clipping graph with rectangle
+function clipGraph() {
+    ctx.beginPath();
+    ctx.strokeStyle = colorCodes["white"]
+    ctx.rect(0, 0, width, height)
+    ctx.stroke()
+    ctx.clip()
+    ctx.closePath();
+}
