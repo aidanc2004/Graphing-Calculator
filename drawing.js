@@ -238,6 +238,11 @@ function drawGraph() {
     // clear canvas
     ctx.clearRect(0, 0, width, height);
 
+    // Fix vertical asymptotes by clipping graph with rectangle
+    ctx.rect(0, 0, width, height)
+    ctx.stroke()
+    ctx.clip()
+
     drawGrid();
     
     drawAxes(); // draw x and y axis
