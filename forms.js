@@ -182,7 +182,7 @@ function createListItem(equation) {
     del.addEventListener("click", deleteFunction);
     del.className = "delete";
     
-    li.appendChild(del);
+    li.prepend(del)
 
     return li;
 }
@@ -190,7 +190,9 @@ function createListItem(equation) {
 // delete a function from the array of functions and the list of functions
 function deleteFunction() {
     let equation = this.parentNode.innerText;
-    let letter = equation[0]; // name of the function, only first letter
+    // name of the function, only first letter, ignore first character
+    // because its the 'x' of the delete button
+    let letter = equation[1]; 
 
     functions.forEach(f => {
         // if the function names are the same, remove it

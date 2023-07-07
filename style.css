@@ -49,11 +49,12 @@ button:active {
 }
 
 #equations-list {
-    padding-left: 20px;
+    /* padding-left: 20px; */
+    list-style: none;
 }
 
 .delete {
-    margin-left: 10px;
+    margin-right: 10px;
     margin-top: 0px;
     margin-bottom: 0px;
 
@@ -95,6 +96,7 @@ button:active {
 
 #help-menu ul {
     padding-left: 20px;
+    list-style: circle;
 }
 
 #help-menu h2 {
