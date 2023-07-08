@@ -226,7 +226,7 @@ function drawFunction(f, color) {
         let y = yGraphToCanvas(f(i));
 
         // fix vertical asymptotes
-        if (y < 1000 && y > -1000)
+        if (y < 1_000_000 && y > -1_000_000)
             ctx.lineTo(x, y);
     }
 
