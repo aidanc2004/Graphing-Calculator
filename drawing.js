@@ -138,12 +138,21 @@ function drawPoint() {
     const pointY = yGraphToCanvas(-point.y);
 
     // draw the point on the screen
+    // outline
+    ctx.beginPath();
+    ctx.strokeStyle = colorCodes["black"];
+    ctx.fillStyle = colorCodes["black"];
+    ctx.arc(pointX, yGraphToCanvas(point.y), 2, 0, 2 * Math.PI);
+    ctx.fill();
+    ctx.stroke();
+    ctx.closePath();
+    // point
     ctx.beginPath();
     ctx.strokeStyle = point.color;
     ctx.fillStyle = point.color;
-    ctx.arc(pointX, yGraphToCanvas(point.y), 2, 0, 2 * Math.PI);
+    ctx.arc(pointX, yGraphToCanvas(point.y), 1.8, 0, 2 * Math.PI);
     ctx.fill();
-    ctx.stroke()
+    ctx.stroke();
     ctx.closePath();
 
     // flip graph back to the original configuration so that the
@@ -151,8 +160,9 @@ function drawPoint() {
     ctx.scale(1,-1);
     ctx.translate(0, -height);
 
+    ctx.font = "0.80rem Trebuchet MS"
     ctx.fillStyle = "black";
-    ctx.fillText(`(${xRound}, ${yRound})`, pointX+5, pointY);
+    ctx.fillText(`(${xRound}, ${yRound})`, pointX+5, pointY-5);
     
     ctx.scale(1,-1);
     ctx.translate(0, -height);
