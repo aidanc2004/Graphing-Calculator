@@ -205,7 +205,7 @@ function drawGrid() {
         // only get y at whole numbers
         let y = yGraphToCanvas(Math.ceil(i));
 
-        ctx.beginPath()
+        ctx.beginPath();
         ctx.moveTo(0, y);
         ctx.lineTo(width, y);
         ctx.stroke();
@@ -225,7 +225,9 @@ function drawFunction(f, color) {
         let x = xGraphToCanvas(i);
         let y = yGraphToCanvas(f(i));
 
-        ctx.lineTo(x, y)
+        // fix vertical asymptotes
+        if (y < 1000 && y > -1000)
+            ctx.lineTo(x, y);
     }
 
     ctx.stroke();
@@ -238,8 +240,6 @@ function drawFunction(f, color) {
 function drawGraph() {
     // clear canvas
     ctx.clearRect(0, 0, width, height);
-
-    clipGraph(); // fix asymptotes
     
     drawGrid();
     
@@ -252,14 +252,4 @@ function drawGraph() {
 
         drawFunction(f, color);
     }
-}
-
-// Fix vertical asymptotes by clipping graph with rectangle
-function clipGraph() {
-    ctx.beginPath();
-    ctx.strokeStyle = colorCodes["white"]
-    ctx.rect(0, 0, width, height)
-    ctx.stroke()
-    ctx.clip()
-    ctx.closePath();
 }
