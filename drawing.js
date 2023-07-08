@@ -7,15 +7,16 @@
 const graph = document.getElementById("graph");
 const ctx = graph.getContext("2d");
 
-// width of user interface
-const uiWidth = document.getElementById("ui").clientWidth;
-
-// width and height of the canvas
-graph.width = window.innerWidth - uiWidth - 1;
-graph.height = window.innerHeight - 1;
+// ui and width of ui (when screen is >520px)
+const ui = document.getElementById("ui");
+// const help = document.getElementById("help");
+const uiWidth = ui.clientWidth;
 
 let width = graph.width;
 let height = graph.height;
+
+// set inital width and height
+updateSize();
 
 // range of x and y values
 let xrange = [-5, 5];
@@ -109,16 +110,31 @@ graph.addEventListener("click", (e) => {
 
 // when the window is resized, update width and height
 window.addEventListener('resize', () => {
-    graph.width = window.innerWidth - uiWidth - 1;
-    graph.height = window.innerHeight - 1;
-
-    width = graph.width;
-    height = graph.height;
+    updateSize();
 
     // refresh graph
     setupGraph();
     drawGraph();
 });
+
+// update size of graph and move ui
+function updateSize() {
+    if (window.innerWidth < 520) {
+        graph.width = window.innerWidth;
+        graph.height = window.innerWidth;
+
+        ui.style.top = graph.height.toString() + "px";
+
+        helpButton.style.left = (window.innerWidth - 50).toString() + "px";
+    } else {
+        graph.width = window.innerWidth - uiWidth - 1;
+        graph.height = window.innerHeight - 1;
+        helpButton.style.left = "1rem";
+    }
+
+    width = graph.width;
+    height = graph.height;
+}
 
 // set line width, then scale and translate graph so y goes upwards instead of down
 function setupGraph() {

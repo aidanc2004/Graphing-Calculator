@@ -114,3 +114,16 @@ button:active {
     font-size: 0.8rem;
     color: #bbb;
 }
+
+@media screen and (max-width: 520px) {
+    #ui {
+        height: 100%;
+        position: absolute;
+        border-right: none;
+    }
+
+    #help {
+        position: relative;
+        top: -220px;
+    }
+}
