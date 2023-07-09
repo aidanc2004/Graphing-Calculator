@@ -79,7 +79,7 @@ graph.addEventListener("click", (e) => {
     if (functions.length == 0) return;
 
     // get mouse x and y
-    const x = e.clientX - uiWidth;
+    const x = (graph.width < 520) ?  e.clientX : e.clientX - uiWidth;
     const y = e.clientY;
 
     // mouse y position on graph
@@ -124,12 +124,12 @@ function updateSize() {
         graph.height = window.innerWidth;
 
         ui.style.top = graph.height.toString() + "px";
-
-        helpButton.style.left = (window.innerWidth - 50).toString() + "px";
+        helpButton.style.left = (window.innerWidth - 30).toString() + "px";
     } else {
         graph.width = window.innerWidth - uiWidth - 1;
         graph.height = window.innerHeight - 1;
         helpButton.style.left = "1rem";
+        helpButton.style.bottom = "1rem";
     }
 
     width = graph.width;

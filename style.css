@@ -81,8 +81,8 @@ button:active {
     display: none;
     position: fixed;
     height: 60%;
-    width: 30%;
-    left: 35%;
+    width: 50%;
+    left: 25%;
     top: 20%;
     z-index: 10;
 
@@ -92,6 +92,8 @@ button:active {
     border-radius: 0.5rem;
 
     background-color: white;
+
+    overflow: scroll;
 }
 
 #help-menu ul {
@@ -123,7 +125,12 @@ button:active {
     }
 
     #help {
-        position: relative;
-        top: -220px;
+        position: absolute;
+        top: 0;
+    }
+
+    #help-menu {
+        width: 80%;
+        left: 5%;
     }
 }

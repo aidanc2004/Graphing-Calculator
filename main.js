@@ -5,9 +5,6 @@
 
 /*
  * TODO:
- * - Better mobile support
- *   - Put graph at top and equations at the bottom
- * - Esc to quit help menu
  * - Scroll in and out of graph with scroll wheel
  *   - Drag with middle click to adjust?
  */

@@ -19,6 +19,7 @@ const xyError = document.getElementById("x-y-error");
 const helpButton = document.getElementById("help");
 const helpMenu = document.getElementById("help-menu");
 const helpLoadEquations = document.getElementById("help-load");
+const closeHelp = document.getElementById("closeHelp");
 
 // letter to use for function names (ex. f(x) = x^2 or g(x) = x^2)
 // excludes 'x', because its used for the functions variable
@@ -97,8 +98,6 @@ function addFunction(value) {
     // get equation from user
     let equation = letter + "(x) = " + value;
 
-    console.log(equation);
-
     // catch errors with evaluating equation
     try {
         f = math.evaluate(equation) // evaluate equation into javascript function using Math.js
@@ -146,6 +145,11 @@ helpButton.addEventListener("click", () => {
         helpMenu.style.display = "block";
     }
 });
+
+// close help menu
+closeHelp.addEventListener("click", () => {
+    helpMenu.style.display = "none";
+})
 
 // load example equations into graph
 helpLoadEquations.addEventListener("click", () => {

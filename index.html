@@ -7,7 +7,8 @@
     <script src="forms.js" defer></script>
     <script src="drawing.js" defer></script>
     <script src="main.js" defer></script>
-    <!-- Math.js for turning math equations into JavaScript functions -->
+    <!-- Math.js for turning math equations into JavaScript functions,
+         maybe someday I will write my own parsing library? -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/7.5.1/math.min.js" defer></script>
     <link rel="stylesheet" href="style.css">
     <title>Graphing Calculator</title>
@@ -41,6 +42,7 @@
     <canvas id="graph" width="800" height="800"></canvas>
 
     <div id="help-menu">
+        <button id="closeHelp">x</button>
         <h2>Help</h2>
         <p>In the equation input, put a mathematical equation and press submit. Example equations:</p>
         <ul>
