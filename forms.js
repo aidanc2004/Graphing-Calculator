@@ -89,8 +89,11 @@ submitEquation.addEventListener("click", () => {
 
 // add an equation from input or argument
 function addFunction(value) {
-    // if there are more functions than names, dont add equation
-    if (functions.length >= functionLetters.length) return;
+    // if there are more functions than names, show error and dont add equation
+    if (functions.length >= functionLetters.length) {
+        equationError.textContent = "Error: too many equations"
+        return;
+    }
 
     // get first letter that isnt already a function name
     let letter = chooseFunctionLetter();

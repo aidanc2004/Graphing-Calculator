@@ -53,16 +53,54 @@ const colorCodes = {
     "pink": "#ff60fe",
     "yellow": "#d9ec00",
     "white": "#ffffff",
+    "purple": "#800080",
+    "lime": "#00ff00",
+    "turquoise": "#40e0d0",
+    "magenta": "#ff00ff",
+    "teal": "#008080",
+    "indigo": "#4b0082",
+    "aqua": "#00ffff",
+    "violet": "#ee82ee",
+    "gold": "#ffd700",
+    "coral": "#ff7f50",
+    "cyan": "#00ffff",
+    "olive": "#808000",
+    "navy": "#000080",
+    "lavender": "#e6e6fa",
+    "maroon": "#800000",
+    "darkgreen": "#006400",
+    "steelblue": "#4682b4",
+    "sienna": "#a0522d",
+    "peachpuff": "#ffdab9"
 };
 
 // array of colors to use for functions
 const colors = [
     colorCodes["red"],
-    colorCodes["green"],
+    colorCodes["lime"],
     colorCodes["blue"],
     colorCodes["orange"],
     colorCodes["pink"],
-    colorCodes["yellow"]
+    colorCodes["gold"],
+    colorCodes["green"],
+    colorCodes["turquoise"],
+    colorCodes["purple"],
+    colorCodes["yellow"],
+    colorCodes["magenta"],
+    colorCodes["teal"],
+    colorCodes["indigo"],
+    colorCodes["aqua"],
+    colorCodes["violet"],
+    colorCodes["coral"],
+    colorCodes["cyan"],
+    colorCodes["olive"],
+    colorCodes["navy"],
+    colorCodes["lavender"],
+    colorCodes["maroon"],
+    colorCodes["darkgreen"],
+    colorCodes["steelblue"],
+    colorCodes["sienna"],
+    colorCodes["peachpuff"]
 ];
 
 // scale x and y values to match width and height of canvas

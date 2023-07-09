@@ -5,8 +5,9 @@
 
 /*
  * TODO:
- * - Scroll in and out of graph with scroll wheel
- *   - Drag with middle click to adjust?
+ * - Axis lines are static, make them look like they arent staying still
+ * - More equation colors
+ * - Dragging graph makes points weird, fix
  */
 
 (() => {
