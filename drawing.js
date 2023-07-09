@@ -280,7 +280,7 @@ function drawGraph() {
     }
 }
 
-// Mouse graph movement
+/* Mouse graph movement */
 
 // if user is dragging the mouse
 let drag = false;
@@ -306,12 +306,16 @@ graph.addEventListener("mousemove", event => {
     if (!drag) return;
 
     // get current mouse position
-    let mouseX = event.clientX;
-    let mouseY = event.clientY;
+    const mouseX = event.clientX;
+    const mouseY = event.clientY;
     
+    // use scale so it moves farther when zoomed out
+    const scaleX = (Math.abs(xrange[0]) + Math.abs(xrange[1])) / 10;
+    const scaleY = (Math.abs(yrange[0]) + Math.abs(yrange[1])) / 10;
+
     // calculate what to change x/y range by
-    let changeX = (dragX - mouseX) / 150;
-    let changeY = (dragY - mouseY) / 150;
+    const changeX = (dragX - mouseX) / 150 * scaleX;
+    const changeY = (dragY - mouseY) / 150 * scaleY;
 
     // update x/y range
     xrange[0] += changeX;
@@ -329,16 +333,21 @@ graph.addEventListener("mousemove", event => {
 
 // zoom in and out of graph
 graph.addEventListener("wheel", event => {
-    let scroll = event.deltaY;
+    // get amount scrolled on wheel
+    const scroll = event.deltaY;
 
-    let change = scroll / 150;
+    // use scale so it zooms in/out faster based on range
+    const scale = (Math.abs(xrange[0]) + Math.abs(xrange[1])) / 10
 
+    // calculate what to change x/y range by to zoom in/out
+    const change = scroll / 150 * scale;
+
+    // update x/y range to zoom in/out
     xrange[0] += change;
     xrange[1] -= change;
     yrange[0] += change;
-    yrange[1] -= changeß;
+    yrange[1] -= change;
 
-    console.log(scroll);
-
+    // draw graph to show update
     drawGraph();
 })
