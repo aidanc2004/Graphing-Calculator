@@ -279,3 +279,48 @@ function drawGraph() {
         drawFunction(f, color);
     }
 }
+
+// Mouse graph movement
+
+// if user is dragging the mouse
+let drag = false;
+// last mouse position while dragging
+let dragX = 0;
+let dragY = 0;
+
+graph.addEventListener("mousedown", event => {
+    drag = true;
+    // set inital mouse position
+    dragX = event.clientX;
+    dragY = event.clientY;
+});
+
+graph.addEventListener("mouseup", () => {
+    drag = false;
+});
+
+graph.addEventListener("mousemove", event => {
+    // if the user isnt dragging on the graph, dont do anything
+    if (!drag) return;
+
+    // get current mouse position
+    let mouseX = event.clientX;
+    let mouseY = event.clientY;
+    
+    // calculate what to change x/y range by
+    let changeX = (dragX - mouseX) / 150;
+    let changeY = (dragY - mouseY) / 150;
+
+    // update x/y range
+    xrange[0] += changeX;
+    xrange[1] += changeX;
+    yrange[0] -= changeY;
+    yrange[1] -= changeY;
+
+    // replace last mouse position
+    dragX = mouseX;
+    dragY = mouseY;
+
+    // draw graph to show update
+    drawGraph();
+})
