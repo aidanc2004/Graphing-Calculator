@@ -288,6 +288,7 @@ let drag = false;
 let dragX = 0;
 let dragY = 0;
 
+// find out when user is dragging on graph
 graph.addEventListener("mousedown", event => {
     drag = true;
     // set inital mouse position
@@ -299,6 +300,7 @@ graph.addEventListener("mouseup", () => {
     drag = false;
 });
 
+// change x/y range based on user dragging graph
 graph.addEventListener("mousemove", event => {
     // if the user isnt dragging on the graph, dont do anything
     if (!drag) return;
@@ -322,5 +324,21 @@ graph.addEventListener("mousemove", event => {
     dragY = mouseY;
 
     // draw graph to show update
+    drawGraph();
+})
+
+// zoom in and out of graph
+graph.addEventListener("wheel", event => {
+    let scroll = event.deltaY;
+
+    let change = scroll / 150;
+
+    xrange[0] += change;
+    xrange[1] -= change;
+    yrange[0] += change;
+    yrange[1] -= changeß;
+
+    console.log(scroll);
+
     drawGraph();
 })
