@@ -1,4 +1,5 @@
 /*
+ * Aidan Carey, 2023
  * main.js
  * Program starting point
  */

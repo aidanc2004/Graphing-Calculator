@@ -1,4 +1,5 @@
 /*
+ * Aidan Carey, 2023
  * drawing.js
  * Handles drawing to the graph
  */

@@ -1,4 +1,5 @@
 /*
+ * Aidan Carey, 2023
  * forms.js
  * Handles getting input from forms and using the input
  */
