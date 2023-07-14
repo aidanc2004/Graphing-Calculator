@@ -214,10 +214,10 @@ function drawPoint() {
     ctx.scale(1,-1);
     ctx.translate(0, -height);
 
-    ctx.font = "0.80rem Trebuchet MS"
+    ctx.font = "0.80rem Trebuchet MS";
     ctx.fillStyle = "black";
-    ctx.fillText(`(${xRound}, ${yRound})`, pointX+5, pointY-5);
-    
+    ctx.fillText(`(${xRound}, ${yRound})`, pointX+5, -yGraphToCanvas(point.y) + height - 5);
+
     ctx.scale(1,-1);
     ctx.translate(0, -height);
 }
@@ -367,6 +367,8 @@ graph.addEventListener("mousemove", event => {
 
     // draw graph to show update
     drawGraph();
+
+    drawPoint();
 })
 
 // zoom in and out of graph
